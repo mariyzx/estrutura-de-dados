@@ -69,5 +69,10 @@ int main() {
     duration = chrono::duration_cast<chrono::microseconds>(end - start).count();
     cout << "fibI execution time: " << duration << " microseconds" << " com valor: " << fibIvalue << endl;
 
+    int fibRMvalue = fibRM(n, 0, 1);
+    end = chrono::high_resolution_clock::now();
+    duration = chrono::duration_cast<chrono::microseconds>(end - start).count();
+    cout << "fibRM execution time: " << duration << " microseconds" << " com valor: " << fibRMvalue << endl;
+
     return 0;
 }
