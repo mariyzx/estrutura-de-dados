@@ -16,6 +16,18 @@ typedef struct
     int primeiro, ultimo;
 } TLista;
 
+void apresentacao(void) {
+    cout << endl << endl;
+    cout << "   **********************************" << endl;
+    cout << "     UFRRJ" << endl;
+    cout << "     IM - DTL" << endl;
+    cout << "     Bacharelado em Matematica Aplicada e Computacional" << endl;
+    cout << "     Aluna: Mariana Werneck" << endl;
+    cout << "     Matrícula: 20200031381" << endl;
+    cout << "   **********************************" << endl;
+    cout << endl << endl;
+}
+
 int adicionaElemento(TLista *lista, TItem item)
 {
     if (lista->ultimo >= MAXTAM)
@@ -82,6 +94,7 @@ int concat(TLista *a, TLista *b) {
 
 int main()
 {
+    apresentacao();
     TLista *lista1 = new TLista[MAXTAM];
     TLista *lista2 = new TLista[MAXTAM];
     TLista *listaCopia = new TLista[MAXTAM];
@@ -111,6 +124,7 @@ int main()
     pesquisaItem(lista2, z);
     cout << "Copia lista 2" << endl;
     copiaLista(lista2, listaCopia);
+
     cout << "Concatenação" << endl;
     concat(lista1, lista2);
 
