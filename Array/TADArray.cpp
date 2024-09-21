@@ -18,7 +18,7 @@ typedef struct
 
 int adicionaElemento(TLista *lista, TItem item)
 {
-    if (lista->ultimo == MAXTAM)
+    if (lista->ultimo >= MAXTAM)
         return 0;
     lista->item[lista->ultimo++] = item;
     return 1;
@@ -60,6 +60,26 @@ void copiaLista(TLista *a, TLista *b)
     imprime(b);
 }
 
+int concat(TLista *a, TLista *b) {
+    int newTam = a->ultimo + b->ultimo;
+    TLista *temp = new TLista[newTam];
+
+    temp->primeiro = 0;
+    temp->ultimo = 0;
+
+    for (int i = a->primeiro; i < a->ultimo; i++) {
+        adicionaElemento(temp, a->item[i]);
+    }
+
+    for (int i = b->primeiro; i < b->ultimo; i++) {
+        adicionaElemento(temp, b->item[i]);
+    }
+
+    imprime(temp);
+    delete[] temp;
+ }
+
+
 int main()
 {
     TLista *lista1 = new TLista[MAXTAM];
@@ -91,6 +111,8 @@ int main()
     pesquisaItem(lista2, z);
     cout << "Copia lista 2" << endl;
     copiaLista(lista2, listaCopia);
+    cout << "Concatenação" << endl;
+    concat(lista1, lista2);
 
     delete[] lista1;
     delete[] lista2;
