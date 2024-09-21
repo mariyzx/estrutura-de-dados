@@ -16,6 +16,15 @@ typedef struct
     int primeiro, ultimo;
 } TLista;
 
+void TLista_FazVazia(TLista *pLista);
+int TLista_EhVazia(TLista *pLista);
+int TLista_Insere(TLista *pLista, TItem item);
+int TLista_Retira(TLista *pLista, int p, TItem *removido);
+void TLista_Imprime(TLista *pLista);
+int TLista_Pesquisa(TLista *pLista, TItem item);
+void TLista_Copia(TLista *pLista);
+int TLista_Concat(TLista *pLista, TLista *pLista2);
+
 void apresentacao(void) {
     cout << endl << endl;
     cout << "   **********************************" << endl;
@@ -28,28 +37,50 @@ void apresentacao(void) {
     cout << endl << endl;
 }
 
-int adicionaElemento(TLista *lista, TItem item)
+void TLista_FazVazia(TLista *pLista) {
+    pLista->primeiro = INICIO;
+    pLista->ultimo = pLista->primeiro;
+}
+
+int TLista_EhVazia(TLista *pLista) {
+    return (pLista->ultimo == pLista->primeiro);
+}
+
+int TLista_Insere(TLista *pLista, TItem item)
 {
-    if (lista->ultimo >= MAXTAM)
+    if (pLista->ultimo >= MAXTAM)
         return 0;
-    lista->item[lista->ultimo++] = item;
+    pLista->item[pLista->ultimo++] = item;
     return 1;
 }
 
-void imprime(TLista *lista)
+int TLista_Retira(TLista *pLista, int p, TItem *removido) {
+    if (TLista_EhVazia(pLista) || p > pLista->ultimo) return 0;
+
+    int cont;
+    *removido = pLista->item[p];
+    pLista->ultimo--;
+    for (cont = p + 1; cont <= pLista->ultimo; cont++) {
+        pLista->item[cont - 1] = pLista->item[cont];
+    }
+    return 1;
+}
+
+
+void TLista_Imprime(TLista *pLista)
 {
     int i;
-    for (i = lista->primeiro; i < lista->ultimo; i++)
+    for (i = pLista->primeiro; i < pLista->ultimo; i++)
     {
-        cout << lista->item[i].chave << endl;
+        cout << pLista->item[i].chave << endl;
     }
 }
 
-int pesquisaItem(TLista *lista, TItem item)
+int TLista_Pesquisa(TLista *pLista, TItem item)
 {
-    for (int i = 0; i < lista->ultimo; i++)
+    for (int i = 0; i < pLista->ultimo; i++)
     {
-        if (lista->item[i].chave == item.chave)
+        if (pLista->item[i].chave == item.chave)
         {
             cout << "o elemento " << item.chave << " está na posição " << i << " da lista!" << endl;
             return i;
@@ -59,35 +90,36 @@ int pesquisaItem(TLista *lista, TItem item)
     return -1;
 }
 
-void copiaLista(TLista *a, TLista *b)
-{
-    b->primeiro = a->primeiro;
-    b->ultimo = a->ultimo;
 
-    for (int i = a->primeiro; i < a->ultimo; i++)
+void TLista_Copia(TLista *pLista, TLista *pLista2)
+{
+    pLista2->primeiro = pLista->primeiro;
+    pLista2->ultimo = pLista->ultimo;
+
+    for (int i = pLista->primeiro; i < pLista->ultimo; i++)
     {
-        b->item[i] = a->item[i];
+        pLista2->item[i] = pLista->item[i];
     };
 
-    imprime(b);
+    TLista_Imprime(pLista2);
 }
 
-int concat(TLista *a, TLista *b) {
-    int newTam = a->ultimo + b->ultimo;
+int TLista_Concat(TLista *pLista, TLista *pLista2) {
+    int newTam = pLista->ultimo + pLista2->ultimo;
     TLista *temp = new TLista[newTam];
 
     temp->primeiro = 0;
     temp->ultimo = 0;
 
-    for (int i = a->primeiro; i < a->ultimo; i++) {
-        adicionaElemento(temp, a->item[i]);
+    for (int i = pLista->primeiro; i < pLista->ultimo; i++) {
+        TLista_Insere(temp, pLista->item[i]);
     }
 
-    for (int i = b->primeiro; i < b->ultimo; i++) {
-        adicionaElemento(temp, b->item[i]);
+    for (int i = pLista2->primeiro; i < pLista2->ultimo; i++) {
+        TLista_Insere(temp, pLista2->item[i]);
     }
 
-    imprime(temp);
+    TLista_Imprime(temp);
     delete[] temp;
  }
 
@@ -102,31 +134,31 @@ int main()
     {
         TItem x;
         x.chave = i;
-        adicionaElemento(lista1, x);
+        TLista_Insere(lista1, x);
     }
     for (int i = 5; i < 10; i += 3)
     {
         TItem y;
         y.chave = i;
-        adicionaElemento(lista2, y);
+        TLista_Insere(lista2, y);
     }
     cout << "Lista 1" << endl;
-    imprime(lista1);
+    TLista_Imprime(lista1);
     TItem z;
     z.chave = 4;
-    pesquisaItem(lista1, z);
+    TLista_Pesquisa(lista1, z);
     cout << "Copia lista 1" << endl;
-    copiaLista(lista1, listaCopia);
+    TLista_Copia(lista1, listaCopia);
 
     cout << "Lista 2" << endl;
-    imprime(lista2);
+    TLista_Imprime(lista2);
     z.chave = 7;
-    pesquisaItem(lista2, z);
+    TLista_Pesquisa(lista2, z);
     cout << "Copia lista 2" << endl;
-    copiaLista(lista2, listaCopia);
+    TLista_Copia(lista2, listaCopia);
 
     cout << "Concatenação" << endl;
-    concat(lista1, lista2);
+    TLista_Concat(lista1, lista2);
 
     delete[] lista1;
     delete[] lista2;
