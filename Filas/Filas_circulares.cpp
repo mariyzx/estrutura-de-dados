@@ -77,25 +77,26 @@ class FilaCircular {
 };
 
 int main() {
-	FilaCircular<int> fila(5);
+	FilaCircular<int> filaInt(5);
+	filaInt.enfileirar(10);
+	filaInt.enfileirar(20);
+	filaInt.enfileirar(30);
+	cout << "Fila de inteiros: " << endl;
+	filaInt.imprimirFila();
 
-	fila.enfileirar(10);
-	fila.enfileirar(20);
-	fila.enfileirar(30);
+	FilaCircular<float> filaFloat(5);
+	filaFloat.enfileirar(1.0f);
+	filaFloat.enfileirar(2.3f);
+	filaFloat.enfileirar(3.1f);
+	cout << "Fila de floats: " << endl;
+	filaFloat.imprimirFila();
 
-	cout << "Frente da fila: " << fila.frente() << endl;
-	cout << "Fim da fila: " << fila.fim() << endl;
-
-	fila.desenfileirar();
-	cout << "Fila após desenfileirar: ";
-	fila.imprimirFila();
-
-	fila.enfileirar(40);
-	fila.enfileirar(50);
-	fila.enfileirar(60); // Aqui a fila ficará cheia
-
-	cout << "Fila atual: ";
-	fila.imprimirFila();
+	FilaCircular<string> filaString(5);
+	filaString.enfileirar("1");
+	filaString.enfileirar("2");
+	filaString.enfileirar("3");
+	cout << "Fila de string: " << endl;
+	filaString.imprimirFila();
 
 	return 0;
 }
