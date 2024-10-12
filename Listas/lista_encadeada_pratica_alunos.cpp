@@ -245,6 +245,7 @@ int main() {
     minhaLista.exibir();
 
     minhaLista.adicionarFinal(23);
+    minhaLista.exibir();
 
     return 0;
 }
