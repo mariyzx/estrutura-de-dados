@@ -31,6 +31,8 @@ public:
     // Método para adicionar um elemento no início da lista
     void adicionarInicio(const T& info);
 
+    void adicionarFinal(const T&info);
+
     // Método para adicionar um elemento após um elemento que possua info
     void adicionarElemento(const T& info, const T& infoNovoElemento);
 
@@ -76,6 +78,17 @@ void ListaEncadeada<T>::adicionarInicio(const T& info) {
     Celula<T>* novaCelula = new Celula<T>(info);
     novaCelula->proxima = cabeca->proxima;
     cabeca->proxima = novaCelula;
+}
+
+template <typename T>
+void ListaEncadeada<T>::adicionarFinal(const T& info) {
+    Celula<T>* novaCelula = new Celula<T>(info);
+    if (cabeca == nullptr) {
+        cabeca = novaCelula;
+    } else {
+        ultimo->proxima = novaCelula;
+    }
+    ultimo = novaCelula;
 }
 
 template <typename T>
@@ -230,6 +243,8 @@ int main() {
 
     minhaLista.removerIntermediario(3);
     minhaLista.exibir();
+
+    minhaLista.adicionarFinal(23);
 
     return 0;
 }
